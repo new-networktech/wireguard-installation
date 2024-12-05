@@ -1,33 +1,24 @@
 import os
 import subprocess
+from colorama import Fore, Style
 
-def stop_wireguard():
-    """Stop and disable WireGuard."""
-    print("Stopping WireGuard...")
-    subprocess.run(["sudo", "wg-quick", "down", "wg0"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.run(["sudo", "systemctl", "disable", "wg-quick@wg0"])
-    print("WireGuard stopped and disabled.")
+def remove_wireguard_container():
+    """Stop and remove the WireGuard container."""
+    print(f"{Fore.YELLOW}Stopping and removing WireGuard container...{Style.RESET_ALL}")
+    subprocess.run(["sudo", "docker-compose", "-f", "/opt/wireguard/docker-compose.yml", "down"])
+    print(f"{Fore.GREEN}WireGuard container removed.{Style.RESET_ALL}")
 
 def remove_wireguard_files():
     """Remove WireGuard configuration files."""
-    print("Removing WireGuard configuration files...")
-    subprocess.run(["sudo", "rm", "-rf", "/etc/wireguard"])
-    print("WireGuard configuration files removed.")
-
-def uninstall_wireguard():
-    """Uninstall WireGuard."""
-    print("Uninstalling WireGuard...")
-    subprocess.run(["sudo", "apt", "remove", "--purge", "-y", "wireguard"])
-    subprocess.run(["sudo", "apt", "autoremove", "-y"])
-    print("WireGuard uninstalled.")
+    print(f"{Fore.YELLOW}Removing WireGuard configuration files...{Style.RESET_ALL}")
+    subprocess.run(["sudo", "rm", "-rf", "/opt/wireguard"])
+    print(f"{Fore.GREEN}Configuration files removed.{Style.RESET_ALL}")
 
 def main():
-    """Main function for uninstallation."""
-    print("Starting WireGuard uninstallation...")
-    stop_wireguard()
+    print(f"{Fore.BLUE}Starting WireGuard uninstallation process...{Style.RESET_ALL}")
+    remove_wireguard_container()
     remove_wireguard_files()
-    uninstall_wireguard()
-    print("WireGuard uninstallation complete.")
+    print(f"{Fore.GREEN}Uninstallation complete.{Style.RESET_ALL}")
 
 if __name__ == "__main__":
     main()
