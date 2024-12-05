@@ -122,21 +122,39 @@ You will see the following files:
 
 ---
 
-## **How to Configure Your Devices**
+### **How to Use the QR Code**
 
-### **1. Desktop or Laptop**
+#### **1. Display the QR Code on Your Phone**
 
-- Copy the `peer1.conf` file from `/opt/wireguard/peer1` to your device.
-- Open the WireGuard application on your desktop or laptop.
-- Import the `peer1.conf` file into the app.
-- Save the configuration and activate the VPN.
+If you want to scan the QR code directly with your phone:
 
-### **2. Mobile Devices**
+1. Start a temporary web server to serve the QR code:
+   ```bash
+   python3 -m http.server 8080 --directory /opt/wireguard/peer1/
+   ```
+2. Open a browser on your phone and visit:
+   ```
+   http://<your-server-ip>:8080/peer1.png
+   ```
+3. Scan the QR code displayed in the browser with the WireGuard app on your phone.
 
-- Open the WireGuard app on your smartphone or tablet.
-- Select the "Add Tunnel" option and choose "Scan QR Code."
-- Point your device's camera at the `peer1.png` QR code from the `peer1` folder.
-- The VPN settings will be automatically imported into your WireGuard app.
+**Important**: Stop the temporary web server when done:
+```bash
+Ctrl+C
+```
+
+#### **2. Add the Configuration to Your Devices**
+
+- **Desktop or Laptop**:
+  - Copy the `peer1.conf` file to your device.
+  - Open the WireGuard application on your computer.
+  - Import the `peer1.conf` file.
+  - Save the configuration and activate the VPN.
+  
+- **Mobile Devices**:
+  - Open the WireGuard app on your phone.
+  - Tap the "+" button to add a new tunnel.
+  - Choose "Scan QR Code" and scan the `peer1.png`.
 
 ---
 
@@ -202,15 +220,6 @@ If you have suggestions or improvements, feel free to fork this repository and s
 ## **License**
 
 This project is licensed under the MIT License.
-
----
-
-## **Support**
-
-For additional help, please contact:
-
-- **Email**: [support@new-networktech.com](mailto:support@new-networktech.com)
-- **Telegram**: [Support Group](https://t.me/new_networktech_support)
 
 ---
 
